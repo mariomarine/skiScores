@@ -1,0 +1,26 @@
+{
+  "name": "nordicnumbers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js &",
+    "build": "webpack --config webpack.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariomarine/nordicNumbers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mariomarine/nordicNumbers/issues"
+  },
+  "homepage": "https://github.com/mariomarine/nordicNumbers#readme",
+  "description": "Nordic Numbers is intended to be a WebApp to enable Lander Skiers/Coaches/Parents to better analyze a skier's results."
+}
