@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 
 app.use('/api', router);
 
-app.set('port', 3000);
+app.set('port', 8000);
 
 var server = app.listen(app.get('port'), function() {
         var port = server.address().port;
