@@ -6,7 +6,11 @@ To create an API that can store and produce Wyoming ski results in an organized 
 
 ## The Stack
 We are using:
-- Docker
 - Node
 - Express
-- Postgresql?
+- Sqlite
+
+## Someday?
+Someday we may want to utilize:
+- Docker
+- A real Database (Postgres?)
