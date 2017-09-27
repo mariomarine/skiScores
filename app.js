@@ -1,23 +1,29 @@
 var express = require('express');
-var models = require('./models');
-var bodyparser = require('bodyparser');
+var models = require('./models/RaceModel');
 var Sequelize = require('sequelize');
 var config = require('./config/config.json');
 var app = express();
 var router = express.Router();
 
+const sequelize = new Sequelize('skiscores', 'root', '', {
+    host: 'localhost',
+    dialect: 'sqlite',
 
-var app = express();
-app.use(bodyparser.json());
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    },
 
-
-// pass in Force: true to clear tables
-models.User.sync({}).then(function () {
-    // Table created
-    return models.User.create({
-    });
+    // SQLite only
+    storage: './db/skiscores.sqlite'
 });
 
+sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+}).catch(err => {
+    console.error('Unable to connect to the database:', err);
+});
 
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
