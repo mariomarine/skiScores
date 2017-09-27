@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js &",
-    "build": "webpack --config webpack.config.js"
+    "start": "./node_modules/nodemon/bin/nodemon.js ./app.js --exec",
+    "build": "webpack app.js /bundle/bundle.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "lint": "^1.1.2",
+    "nodemon": "^1.12.1",
+    "sqlite": "^2.8.0",
     "sqlite3": "^3.1.11"
   },
   "devDependencies": {},
