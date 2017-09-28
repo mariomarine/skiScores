@@ -1,7 +1,7 @@
 var express = require('express');
 var models = require('./models/RaceModel');
 var Sequelize = require('sequelize');
-var config = require('./config/config.json');
+var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
 
