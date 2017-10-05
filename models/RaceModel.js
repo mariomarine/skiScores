@@ -3,7 +3,7 @@
 var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    var RaceModel = sequelize.define('RaceModel', {
+    var raceModel = sequelize.define('raceModel', {
         raceId: {
             type: Sequelize.STRING,
             unique: true,
@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true // Model tableName will be the same as the model name
     });
 
-    RaceModel.sync({}).then(function () {
+    raceModel.sync({}).then(function () {
         // Table created
-        return RaceModel.create({
+        return raceModel.create({
             raceId: 'onetwothree',
             location: 'landerwy'
         });

@@ -1,10 +1,11 @@
 var express = require('express');
-var models = require('./models/RaceModel');
+var racemodel = require('./models/RaceModel.js');
 var Sequelize = require('sequelize');
 var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
 
+// Attaching to to the database
 const sequelize = new Sequelize('skiscores', 'root', '', {
     host: 'localhost',
     dialect: 'sqlite',
@@ -14,10 +15,9 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
         min: 0,
         idle: 10000
     },
-
-    // SQLite only
     storage: './db/skiscores.sqlite'
 });
+sequelize.sync()
 
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
