@@ -9,8 +9,4 @@ We are using:
 - Node
 - Express
 - Sqlite
-
-## Someday?
-Someday we may want to utilize:
-- Docker
-- A real Database (Postgres?)
+- Sequelize
