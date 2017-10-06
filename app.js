@@ -18,7 +18,7 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
         min: 0,
         idle: 10000
     },
-    storage: './db/skiscores.sqlite'
+    storage: './skiscores'
 });
 
 // Synchronize tables
@@ -43,13 +43,15 @@ router.get('/', function(req, res) {
 });
 // Race data endpoint
 router.get('/races', function(req, res) {
-    res.json(db.race.findAll(
+    db.race.findAll(
         {
           where: {
             raceId: 123
           }
         }
-    ));
+    ).then(function(races) {
+        res.json(races);
+    });
 });
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
