@@ -3,13 +3,13 @@
 var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const raceModel = sequelize.define('raceModel', {
-        raceId: {
-            type: Sequelize.INTEGER,
+    var results = sequelize.define('resultModel', {
+        resultId: {
+            type: Sequelize.STRING,
             unique: true,
             primaryKey: true
         },
-        location: {
+        personId: {
             type: Sequelize.STRING(10)
         },
         date: {
@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true // Model tableName will be the same as the model name
     });
 
-raceModel.sync({}).then(function () {
-    // Table created
-    return raceModel.create({
-        raceId: 123,
-        location: 'landerwy',
-        date: '',
-        class: 'Varsity',
-        level: '231'
+    raceModel.sync({}).then(function () {
+        // Table created
+        return raceModel.create({
+            raceId: 'onetwothree',
+            location: 'landerwy',
+            date: '',
+            class: 'Varsity',
+            level: '231'
+        });
     });
-});
 };

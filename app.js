@@ -1,11 +1,13 @@
 var express = require('express');
-var racemodel = require('./models/RaceModel.js');
-var Sequelize = require('sequelize');
+var racemodel = require('./models/RaceModel');
 var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
 
-// Attaching to to the database
+require('./routes')(app);
+
+const Sequelize = require('sequelize');
+// Attaching to to the database, and establishing a connection
 const sequelize = new Sequelize('skiscores', 'root', '', {
     host: 'localhost',
     dialect: 'sqlite',
@@ -17,23 +19,37 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
     },
     storage: './db/skiscores.sqlite'
 });
-sequelize.sync()
 
+// Synchronize tables
+sequelize.sync().then(() =>{
+   app.listen(config.port || 8000);
+   console.log('server started on port ' + config.port);
+}).catch(err => {
+    console.log('failed to synchronize tables');
+});
+
+// HuzaH! DB connection!
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
 }).catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to authenticate sequelize: ', err);
 });
 
+// Root endpoint
+router.get('/', function(req, res) {
+    res.json({message: 'hoorway! welcome to our api!'});
+});
+// Race data endpoint
+router.get('/races', function(req, res) {
+    res.json({});
+});
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
-router.get('/', function(req, res) {
-    res.json({message: 'hoorway! welcome to our api!'});
-});
+
 
 // var sqlite3 = require('sqlite3').verbose();
 // let db = new sqlite3.Database('./db/skiscores.db', (err) => {
