@@ -25,14 +25,5 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true // Model tableName will be the same as the model name
     });
 
-raceModel.sync({}).then(function () {
-    // Table created
-    return raceModel.create({
-        raceId: 123,
-        location: 'landerwy',
-        date: '',
-        class: 'Varsity',
-        level: '231'
-    });
-});
+    return raceModel
 };

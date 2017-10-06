@@ -4,8 +4,8 @@ module.exports = {
         // localhost:8000/api/races
         return res.post('Woohoo!');
     },
-getRaces(req,res,next) {
-    // do some database work...
-}
+    getRaces(req,res,next) {
+        // do some database work...
+    }
 
 };

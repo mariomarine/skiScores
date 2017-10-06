@@ -3,8 +3,9 @@ var racemodel = require('./models/RaceModel');
 var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
+var db = {};
 
-require('./routes')(app);
+// require('./routes')(app);
 
 const Sequelize = require('sequelize');
 // Attaching to to the database, and establishing a connection
@@ -21,12 +22,12 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
 });
 
 // Synchronize tables
-sequelize.sync().then(() =>{
-   app.listen(config.port || 8000);
-   console.log('server started on port ' + config.port);
-}).catch(err => {
-    console.log('failed to synchronize tables');
-});
+// sequelize.sync().then(() =>{
+   // app.listen(config.port || 8000);
+   // console.log('server started on port ' + config.port);
+// }).catch(err => {
+    // console.log('failed to synchronize tables');
+// });
 
 // HuzaH! DB connection!
 sequelize.authenticate().then(() => {
@@ -35,13 +36,20 @@ sequelize.authenticate().then(() => {
     console.error('Unable to connect to authenticate sequelize: ', err);
 });
 
+db.race = require('./models/RaceModel')(sequelize, Sequelize);
 // Root endpoint
 router.get('/', function(req, res) {
     res.json({message: 'hoorway! welcome to our api!'});
 });
 // Race data endpoint
 router.get('/races', function(req, res) {
-    res.json({});
+    res.json(db.race.findAll(
+        {
+          where: {
+            raceId: 123
+          }
+        }
+    ));
 });
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
@@ -75,9 +83,9 @@ app.use(function(req, res, next) {
 //
 //
 // // Finalize API settings and initialize
-// app.use('/api', router);
-// app.set('port', 8000);
-// var server = app.listen(app.get('port'), function() {
-//         var port = server.address().port;
-//         console.log('Magic happens on port ' + config.port);
-// });
+app.use('/api', router);
+app.set('port', 8000);
+var server = app.listen(app.get('port'), function() {
+        var port = server.address().port;
+        console.log('Magic happens on port ' + config.port);
+});
