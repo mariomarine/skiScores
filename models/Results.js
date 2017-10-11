@@ -3,13 +3,13 @@
 let Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    let results = sequelize.define('resultModel', {
-        resultId: {
+    const resultModel = sequelize.define('resultModel', {
+        resultID: {
             type: Sequelize.INTEGER,
             unique: true,
             primaryKey: true
         },
-        personId: {
+        personID: {
             type: Sequelize.INTEGER,
             unique: true
         },
@@ -34,6 +34,5 @@ module.exports = (sequelize, DataTypes) => {
     });
     return resultModel
 };
-    return raceModel;
-};
+
 

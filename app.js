@@ -1,5 +1,6 @@
 var express = require('express');
 var racemodel = require('./models/RaceModel');
+var resultmodel = require('./models/Results');
 var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
@@ -19,6 +20,18 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
     storage: './skiscores'
 });
 
+// sequelize.sync({}).then(() => {
+//     // Table created
+//     return racemodel.create({
+//         resultID: 123654,
+//         personID: 774477,
+//         raceID: 123456789,
+//         grade: 12,
+//         team: 'Varisity City Team',
+//         place: 123456
+//     });
+// });
+
 // Synchronize tables (commented out for reference)
 // sequelize.sync().then(() =>{
    // app.listen(config.port || 8000);
@@ -35,6 +48,7 @@ sequelize.authenticate().then(() => {
 });
 
 db.race = require('./models/RaceModel')(sequelize, Sequelize);
+db.results = require('./models/Results')(sequelize, Sequelize);
 
 // Root endpoint
 router.get('/', function(req, res) {
@@ -56,6 +70,19 @@ router.get('/races', function(req, res) {
         }
     ).then(function(races) {
         res.json(races);
+    });
+});
+
+// Results data endpoint
+router.get('/results', function(req, res){
+    db.results.findAll(
+        {
+            where: {
+                personId: 123456
+            }
+        }
+    ).then(function(results) {
+        res.json(results);
     });
 });
 
