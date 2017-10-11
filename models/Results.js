@@ -34,4 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     });
     return resultModel
 };
+    return raceModel;
+};
 
