@@ -1,6 +1,6 @@
 'use strict';
 
-let Sequelize = require('sequelize');
+var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     const resultModel = sequelize.define('resultModel', {
