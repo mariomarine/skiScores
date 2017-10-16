@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csvtojson": "^1.1.9",
     "express": "^4.15.2",
     "lint": "^1.1.2",
     "nodemon": "^1.12.1",
-    "sequelize": "^4.13.5",
+    "prompt": "^1.0.0",
+    "sequelize": "^4.13.17",
     "sqlite3": "^3.1.11"
   },
   "devDependencies": {},
