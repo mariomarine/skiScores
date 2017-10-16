@@ -13,7 +13,7 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
         idle: 10000
     },
     storage: '../skiscores'
-    // storage: './test/testscores'
+    // storage: './testscores'
 });
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
@@ -23,7 +23,7 @@ sequelize.authenticate().then(() => {
 db.race = require('../models/RaceModel')(sequelize, Sequelize);
 db.results = require('../models/Results')(sequelize, Sequelize);
 db.person = require('../models/Person')(sequelize, Sequelize);
-db.race.sync({force:true});
+db.race.sync({force: false});
 db.results.sync({force: false});
 db.person.sync({force: false});
 
@@ -49,22 +49,17 @@ var getFileName = function () {
 var getDataFromFile = function (filename) {
 }
 
-var handleData = function (data, filename) {
+async function handleData (data, filename) {
     var personObject, resultObject, raceid, personid;
     race_params = getRaceParams(filename);
-    racePromise = buildRace(race_params);
-    racePromise.then(function (savedRace) {
-        raceid = savedRace[0].dataValues.id
-        for (var i = 0; i < data.length; i++) {
-            let result = data[i];
-            console.log(result.time);
-            personPromise = buildPerson(result, race_params.gender);
-            personPromise.then(function(savedPerson) {
-                personid = savedPerson[0].dataValues.id
-                resultObject = buildResult(result, raceid, personid).then(function () {});
-            }); // End of Person Promise
-        }
-    }) // End of Race Promise
+    savedRace = await buildRace(race_params);
+    raceid = savedRace[0].dataValues.id
+    for (var i = 0; i < data.length; i++) {
+        let result = data[i];
+        savedPerson = await buildPerson(result, race_params.gender);
+        personid = savedPerson[0].dataValues.id;
+        resultObject = await buildResult(result, raceid, personid);
+    }
 }
 
 var getRaceParams = function (filename) {
