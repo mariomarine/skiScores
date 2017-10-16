@@ -19,17 +19,47 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
     },
     storage: './skiscores'
 });
-
+// Create variables for each race use in endpoints
+db.race = require('./models/RaceModel')(sequelize, Sequelize);
+db.results = require('./models/Results')(sequelize, Sequelize);
+db.person = require('./models/Person')(sequelize, Sequelize);
+// Commented for reference when testing
+// sequelize.sync()
+//     .then(() => db.person.create({
+//     personid: 101010,
+//     gender: 'U',
+//     first:   'jo',
+//     last:    'crafty',
+//     graduation: 12
+// }))
+// .then(person => {
+//     console.log(person.get({
+//     plain: true
+// }));
+// });
 // sequelize.sync({}).then(() => {
 //     // Table created
-//     return racemodel.create({
-//         resultID: 123654,
+//     return resultmodel.resultModel.create({
+//         resultID: 123456,
 //         personID: 774477,
-//         raceID: 123456789,
-//         grade: 12,
-//         team: 'Varisity City Team',
-//         place: 123456
+//         raceID:   123456789,
+//         grade:    12,
+//         team:     'Varisity City Team',
+//         place:    123456
 //     });
+// });
+
+// sequelize.sync()
+//     .then(() => db.race.create({
+//     raceId: 101 ,
+//     location: 'Austin Tx',
+//     class:    'junior',
+//     level: '123'
+// }))
+// .then(race => {
+//     console.log(person.get({
+//     plain: true
+// }));
 // });
 
 // Synchronize tables (commented out for reference)
@@ -47,38 +77,43 @@ sequelize.authenticate().then(() => {
     console.error('Unable to connect to authenticate sequelize: ', err);
 });
 
-db.race = require('./models/RaceModel')(sequelize, Sequelize);
-db.results = require('./models/Results')(sequelize, Sequelize);
-
 // Root endpoint
 router.get('/', function(req, res) {
     res.json({message: 'hoorway! welcome to our api!'});
 });
 
-// Race results endpoint
-// router.get('/results', function(req, res) {
-//
-// }
+// Universal raceid used for calling a selection of races
+// May have to alter by allowing the variable to take a users input
+var raceid = 123;
 
 // Race data endpoint
-router.get('/races', function(req, res) {
+// Used to display individual race data given the variable raceid
+router.get('/race', function(req, res) {
     db.race.findAll(
         {
           where: {
-            raceId: 123
+            raceId: raceid
           }
         }
-    ).then(function(races) {
-        res.json(races);
+    ).then(function(race) {
+        res.json(race);
     });
 });
 
+// Querying ALL of the races
+// Races data endpoint
+// Pagination?
+router.get('/races', function(req, res){
+    db.race.findAll().then(function(races){res.json(races);})
+});
+
 // Results data endpoint
-router.get('/results', function(req, res){
+// @var: raceid ^^ possibly change to accept user input?
+router.get('/result', function(req, res){
     db.results.findAll(
         {
             where: {
-                personId: 123456
+                raceID: raceid
             }
         }
     ).then(function(results) {
