@@ -110,10 +110,11 @@ router.get('/races', function(req, res){
 // Results data endpoint
 // @var: raceid ^^ possibly change to accept user input?
 router.get('/result', function(req, res){
-    db.results.findAll(
+raceid = req.query.raceID;	
+	db.results.findAll(
         {
             where: {
-                raceID: raceid
+                raceId: raceid 
             }
         }
     ).then(function(results) {
@@ -121,6 +122,7 @@ router.get('/result', function(req, res){
     });
 });
 
+// 
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
