@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js &",
-    "build": "webpack --config webpack.config.js"
+    "start": "./node_modules/nodemon/bin/nodemon.js ./app.js --exec",
+    "build": "webpack app.js /bundle/bundle.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "csvtojson": "^1.1.9",
     "express": "^4.15.2",
+    "lint": "^1.1.2",
+    "nodemon": "^1.12.1",
+    "prompt": "^1.0.0",
+    "sequelize": "^4.13.17",
     "sqlite3": "^3.1.11"
   },
   "devDependencies": {},
