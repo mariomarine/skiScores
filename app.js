@@ -121,8 +121,21 @@ raceid = req.query.raceID;
         res.json(results);
     });
 });
-
-// 
+// Results data endpoint given a personID
+// @raceid: query given a person's id
+// Should be able to return all of the results of a specific persons race
+// End user functionality would be for racers looking into results.
+router.get('/personresults', function(req, res){
+personid = req.query.personID; // Check if this is the same as in the model
+	db.results.findAll(
+	{
+	    where: {
+		    personID: personid
+	    }
+	}).then(function(person) {
+	    res.json(person);
+	});
+});
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
