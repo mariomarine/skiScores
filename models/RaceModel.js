@@ -3,26 +3,40 @@
 var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const raceModel = sequelize.define('raceModel', {
-        raceId: {
-            type: Sequelize.INTEGER,
-            unique: true,
-            primaryKey: true
-        },
+    const raceModel = sequelize.define('races', {
         location: {
             type: Sequelize.STRING(10)
         },
         date: {
-            type: Sequelize.DATE
+            type: Sequelize.DATEONLY
         },
         class: {
             type: Sequelize.STRING(10)
         },
         level: {
             type: Sequelize.STRING(3)
+        },
+        distance: {
+            type: Sequelize.STRING(3)
+        },
+        gender: {
+            type: Sequelize.STRING(9)
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name
     });
+
     return raceModel
+
+/*
+    // Here for documentation
+    raceModel.sync({}).then(function () {
+        // Table created
+        return raceModel.create({
+            location: 'casper'
+        });
+    });
+*/
+
+    return raceModel;
 };
