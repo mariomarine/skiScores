@@ -1,7 +1,6 @@
 var express = require('express');
 var racemodel = require('./models/RaceModel');
 var resultmodel = require('./models/Results');
-var config = require('./config/config.js');
 var app = express();
 var router = express.Router();
 var db = {};
@@ -46,13 +45,13 @@ router.get('/', function(req, res) {
 // Universal raceid used for calling a selection of races
 
 // Race data endpoint
-// Used to display individual race data given the variable raceid
+// Used to display individual race data given a raceID
 router.get('/race', function(req, res) {
     raceid = req.query.raceID;
     db.race.findAll(
         {
           where: {
-            raceId: raceid
+            raceID: raceid
           }
         }
     ).then(function(race) {
@@ -68,7 +67,7 @@ router.get('/races', function(req, res){
 });
 
 // Results data endpoint
-// @var: raceid
+// Returns a races results given a raceID
 router.get('/result', function(req, res){
     raceid = req.query.raceID;
 	db.results.findAll(
@@ -86,7 +85,7 @@ router.get('/result', function(req, res){
 // Should be able to return all of the results of a specific persons race
 // End user functionality would be for racers looking into results.
 router.get('/personresults', function(req, res){
-personid = req.query.personID; // Check if this is the same as in the model
+personid = req.query.personID;
 	db.results.findAll(
 	{
 	    where: {
@@ -108,5 +107,5 @@ app.use('/api', router);
 app.set('port', 8000);
 var server = app.listen(app.get('port'), function() {
         var port = server.address().port;
-        console.log('Magic happens on port ' + config.port);
+        console.log('Magic happens on port 8000');
 });

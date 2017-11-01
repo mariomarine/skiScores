@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         last: {
             type: Sequelize.STRING(15)
         },
-        gender: {
-            type: Sequelize.STRING(9)
-        },
         graduation: {
             type: Sequelize.INTEGER
         }

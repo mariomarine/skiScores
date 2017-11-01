@@ -3,7 +3,6 @@
 var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-<<<<<<< HEAD
     const resultModel = sequelize.define('resultModel', {
         resultID: {
             type: Sequelize.INTEGER,
