@@ -4,11 +4,6 @@ var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     const person = sequelize.define('person', {
-        personid: {
-            type: Sequelize.INTEGER,
-            unique: true,
-            primaryKey: true
-        },
         gender: {
             type: Sequelize.STRING(1) // M, F, U
         },
@@ -17,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         last: {
             type: Sequelize.STRING(15)
+        },
+        gender: {
+            type: Sequelize.STRING(9)
         },
         graduation: {
             type: Sequelize.INTEGER
