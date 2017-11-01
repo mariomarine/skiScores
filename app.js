@@ -23,45 +23,6 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
 db.race = require('./models/RaceModel')(sequelize, Sequelize);
 db.results = require('./models/Results')(sequelize, Sequelize);
 db.person = require('./models/Person')(sequelize, Sequelize);
-// Commented for reference when testing
-// sequelize.sync()
-//     .then(() => db.person.create({
-//     personid: 101010,
-//     gender: 'U',
-//     first:   'jo',
-//     last:    'crafty',
-//     graduation: 12
-// }))
-// .then(person => {
-//     console.log(person.get({
-//     plain: true
-// }));
-// });
-// sequelize.sync({}).then(() => {
-//     // Table created
-//     return resultmodel.resultModel.create({
-//         resultID: 123456,
-//         personID: 774477,
-//         raceID:   123456789,
-//         grade:    12,
-//         team:     'Varisity City Team',
-//         place:    123456
-//     });
-// });
-
-// sequelize.sync()
-//     .then(() => db.race.create({
-//     raceId: 101 ,
-//     location: 'Austin Tx',
-//     class:    'junior',
-//     level: '123'
-// }))
-// .then(race => {
-//     console.log(person.get({
-//     plain: true
-// }));
-// });
-
 // Synchronize tables (commented out for reference)
 // sequelize.sync().then(() =>{
    // app.listen(config.port || 8000);
@@ -83,12 +44,11 @@ router.get('/', function(req, res) {
 });
 
 // Universal raceid used for calling a selection of races
-// May have to alter by allowing the variable to take a users input
-var raceid = 123;
 
 // Race data endpoint
 // Used to display individual race data given the variable raceid
 router.get('/race', function(req, res) {
+    raceid = req.query.raceID;
     db.race.findAll(
         {
           where: {
@@ -108,8 +68,9 @@ router.get('/races', function(req, res){
 });
 
 // Results data endpoint
-// @var: raceid ^^ possibly change to accept user input?
+// @var: raceid
 router.get('/result', function(req, res){
+    raceid = req.query.raceID;
     db.results.findAll(
         {
             where: {
