@@ -10,3 +10,6 @@ We are using:
 - Express
 - Sqlite
 - Sequelize
+
+## API Documentation
+[https://github.com/mariomarine/skiScores/wiki/Documentation](Documentation)
