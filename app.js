@@ -47,11 +47,11 @@ router.get('/', function(req, res) {
 // Race data endpoint
 // Used to display individual race data given a raceID
 router.get('/race', function(req, res) {
-    raceid = req.query.raceID;
+    raceid = req.query.raceid;
     db.race.findAll(
         {
           where: {
-            raceID: raceid
+            raceid: raceid
           }
         }
     ).then(function(race) {
@@ -69,11 +69,11 @@ router.get('/races', function(req, res){
 // Results data endpoint
 // Returns a races results given a raceID
 router.get('/result', function(req, res){
-    raceid = req.query.raceID;
+    raceid = req.query.raceid;
 	db.results.findAll(
         {
             where: {
-                raceId: raceid 
+                raceid: raceid 
             }
         }
     ).then(function(results) {
@@ -85,11 +85,11 @@ router.get('/result', function(req, res){
 // Should be able to return all of the results of a specific persons race
 // End user functionality would be for racers looking into results.
 router.get('/personresults', function(req, res){
-personid = req.query.personID;
+personid = req.query.personid;
 	db.results.findAll(
 	{
 	    where: {
-		    personID: personid
+		    personid: personid
 	    }
 	}).then(function(person) {
 	    res.json(person);
