@@ -3,6 +3,15 @@ var normalize_race = function (req_query) {
     if (req_query.raceid) {
         params.id = req_query.raceid;
     }
+    if (req_query.class) {
+        params.class = req_query.class;
+    }
+    if (req_query.skill) {
+        params.skill = req_query.skill;
+    }
+    if (req_query.gender) {
+        params.gender = req_query.gender;
+    }
     return params;
 }
 
