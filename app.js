@@ -1,4 +1,5 @@
 var express = require('express');
+var normalizer = require('./normalizer.js');
 var app = express();
 var router = express.Router();
 var db = {};
@@ -43,55 +44,34 @@ router.get('/', function(req, res) {
 // Universal raceid used for calling a selection of races
 
 // Race data endpoint
-// Used to display individual race data given a raceid
-router.get('/race', function(req, res) {
-    raceid = req.query.raceid;
+router.get('/races', function(req, res) {
     db.race.findAll(
         {
-          where: {
-            raceid: raceid
-          }
+          where: normalizer.normalize_race(req.query)
         }
     ).then(function(race) {
         res.json(race);
     });
 });
 
-// Querying ALL of the races
-// Races data endpoint
-// Pagination?
-router.get('/races', function(req, res){
-    db.race.findAll().then(function(races){res.json(races);})
-});
-
 // Results data endpoint
-// Returns a races results given a raceid
 router.get('/result', function(req, res){
-    raceid = req.query.raceid;
+    personid = req.query.personid;
 	db.results.findAll(
         {
             where: {
-                raceid: raceid 
+                personid: personid 
             }
         }
     ).then(function(results) {
         res.json(results);
     });
 });
-// Results data endpoint given a personid
-// @raceid: query given a person's id
-// Should be able to return all of the results of a specific persons race
-// End user functionality would be for racers looking into results.
-router.get('/personresults', function(req, res){
-personid = req.query.personid;
-	db.results.findAll(
-	{
-	    where: {
-		    personid: personid
-	    }
-	}).then(function(person) {
-	    res.json(person);
-	});
+// Results data endpoint
+router.get('/results', function(req, res){
+    db.race.findAll().then(function(races){
+        res.json(races);
+    })
 });
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {

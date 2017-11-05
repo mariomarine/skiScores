@@ -1,7 +1,7 @@
 var normalize_race = function (query) {
     var race_query = {};
     if (query.raceid) {
-        race_query.raceid = query.raceid;
+        race_query.id = query.raceid;
     }
     return race_query;
 }
