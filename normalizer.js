@@ -1,10 +1,26 @@
-var normalize_race = function (query) {
-    var race_query = {};
-    if (query.raceid) {
-        race_query.id = query.raceid;
+var normalize_race = function (req_query) {
+    var params = {};
+    if (req_query.raceid) {
+        params.id = req_query.raceid;
     }
-    return race_query;
+    return params;
 }
 
-module.exports = { normalize_race };
+var normalize_result = function (req_query) {
+    var params = {};
+    if (req_query.resultid) {
+        params.id = req_query.resultid;
+    }
+    return params;
+}
+
+var normalize_person = function (req_query) {
+    var params = {};
+    if (req_query.personid) {
+        params.id = req_query.personid;
+    }
+    return params;
+}
+
+module.exports = { normalize_race, normalize_result, normalize_person };
 

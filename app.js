@@ -21,13 +21,6 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
 db.race = require('./models/race')(sequelize, Sequelize);
 db.results = require('./models/result')(sequelize, Sequelize);
 db.person = require('./models/person')(sequelize, Sequelize);
-// Synchronize tables (commented out for reference)
-// sequelize.sync().then(() =>{
-   // app.listen(config.port || 8000);
-   // console.log('server started on port ' + config.port);
-// }).catch(err => {
-    // console.log('failed to synchronize tables');
-// });
 
 // HuzaH! DB connection!
 sequelize.authenticate().then(() => {
@@ -41,7 +34,6 @@ router.get('/', function(req, res) {
     res.json({message: 'hoorway! welcome to our api!'});
 });
 
-// Universal raceid used for calling a selection of races
 
 // Race data endpoint
 router.get('/races', function(req, res) {
@@ -55,24 +47,27 @@ router.get('/races', function(req, res) {
 });
 
 // Results data endpoint
-router.get('/result', function(req, res){
-    personid = req.query.personid;
+router.get('/results', function(req, res){
 	db.results.findAll(
         {
-            where: {
-                personid: personid 
-            }
+            where: normalizer.normalize_result(req.query)
         }
     ).then(function(results) {
         res.json(results);
     });
 });
-// Results data endpoint
-router.get('/results', function(req, res){
-    db.race.findAll().then(function(races){
-        res.json(races);
-    })
+
+// Person data endpoint
+router.get('/person', function(req, res){
+	db.results.findAll(
+        {
+            where: normalizer.normalize_person(req.query)
+        }
+    ).then(function(results) {
+        res.json(results);
+    });
 });
+
 // Potentially necessary? Harmless to leave until the end of our testing...
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -87,3 +82,4 @@ var server = app.listen(app.get('port'), function() {
         var port = server.address().port;
         console.log('Magic happens on port 8000');
 });
+
