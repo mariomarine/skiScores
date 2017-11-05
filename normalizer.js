@@ -11,6 +11,12 @@ var normalize_result = function (req_query) {
     if (req_query.resultid) {
         params.id = req_query.resultid;
     }
+    if (req_query.raceid) {
+        params.raceid = req_query.raceid;
+    }
+    if (req_query.personid) {
+        params.personid = req_query.personid;
+    }
     return params;
 }
 
