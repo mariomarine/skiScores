@@ -20,11 +20,11 @@ sequelize.authenticate().then(() => {
 }).catch(err => {
     console.error('Unable to connect to authenticate sequelize: ', err);
 });
-db.race = require('../models/RaceModel')(sequelize, Sequelize);
-db.results = require('../models/Results')(sequelize, Sequelize);
-db.person = require('../models/Person')(sequelize, Sequelize);
+db.race = require('../models/race')(sequelize, Sequelize);
+db.result = require('../models/result')(sequelize, Sequelize);
+db.person = require('../models/person')(sequelize, Sequelize);
 db.race.sync({force: false});
-db.results.sync({force: false});
+db.result.sync({force: false});
 db.person.sync({force: false});
 
 /*
@@ -109,7 +109,7 @@ var buildPerson = function (result, gender) {
 }
 
 var buildResult = function (result, raceid, personid) {
-    return db.results.findOrCreate({where: {
+    return db.result.findOrCreate({where: {
         raceid: raceid,
         personid: personid,
         time: getNumSeconds(result.time)

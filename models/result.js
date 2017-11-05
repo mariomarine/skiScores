@@ -3,19 +3,17 @@
 var Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const resultModel = sequelize.define('resultModel', {
-        resultID: {
+    const resultModel = sequelize.define('result', {
+        id: {
             type: Sequelize.INTEGER,
             unique: true,
             primaryKey: true
         },
-        personID: {
+        personid: {
             type: Sequelize.INTEGER,
-            unique: true
         },
-        raceID: {
+        raceid: {
             type: Sequelize.INTEGER,
-            unique: true
         },
         grade: {
             type: Sequelize.INTEGER
@@ -27,28 +25,12 @@ module.exports = (sequelize, DataTypes) => {
             type: Sequelize.INTEGER
         },
         time: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name
     });
     return resultModel
-
-    var results = sequelize.define('results', {
-        personid: {
-            type: Sequelize.INTEGER,
-        },
-        raceid: {
-            type: Sequelize.INTEGER
-        },
-        time: {
-            type: Sequelize.INTEGER // seconds
-        },
-    }, {
-        freezeTableName: true // Model tableName will be the same as the model name
-    });
-
-    return results;
 };
 
 

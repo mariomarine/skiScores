@@ -1,6 +1,4 @@
 var express = require('express');
-var racemodel = require('./models/RaceModel');
-var resultmodel = require('./models/Results');
 var app = express();
 var router = express.Router();
 var db = {};
@@ -19,9 +17,9 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
     storage: './skiscores'
 });
 // Create variables for each race use in endpoints
-db.race = require('./models/RaceModel')(sequelize, Sequelize);
-db.results = require('./models/Results')(sequelize, Sequelize);
-db.person = require('./models/Person')(sequelize, Sequelize);
+db.race = require('./models/race')(sequelize, Sequelize);
+db.results = require('./models/result')(sequelize, Sequelize);
+db.person = require('./models/person')(sequelize, Sequelize);
 // Synchronize tables (commented out for reference)
 // sequelize.sync().then(() =>{
    // app.listen(config.port || 8000);
@@ -45,7 +43,7 @@ router.get('/', function(req, res) {
 // Universal raceid used for calling a selection of races
 
 // Race data endpoint
-// Used to display individual race data given a raceID
+// Used to display individual race data given a raceid
 router.get('/race', function(req, res) {
     raceid = req.query.raceid;
     db.race.findAll(
@@ -67,7 +65,7 @@ router.get('/races', function(req, res){
 });
 
 // Results data endpoint
-// Returns a races results given a raceID
+// Returns a races results given a raceid
 router.get('/result', function(req, res){
     raceid = req.query.raceid;
 	db.results.findAll(
@@ -80,7 +78,7 @@ router.get('/result', function(req, res){
         res.json(results);
     });
 });
-// Results data endpoint given a personID
+// Results data endpoint given a personid
 // @raceid: query given a person's id
 // Should be able to return all of the results of a specific persons race
 // End user functionality would be for racers looking into results.
