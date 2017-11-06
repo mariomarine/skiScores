@@ -12,8 +12,8 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
         min: 0,
         idle: 10000
     },
-    storage: '../skiscores'
-    // storage: './testscores'
+    // storage: '../skiscores'
+    storage: './testscores'
 });
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
@@ -61,7 +61,10 @@ async function handleData (data, filename) {
         try {
             resultObject = await buildResult(result, raceid, personid);
         } catch(err) {
-            console.log(err);
+            if (err.name !== 'TypeError') { // Results import error (issue #16)
+                console.log(err)
+                return 1;
+            }
         }
     }
 }
