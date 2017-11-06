@@ -58,7 +58,11 @@ async function handleData (data, filename) {
         let result = data[i];
         savedPerson = await buildPerson(result, race_params.gender);
         personid = savedPerson[0].dataValues.id;
-        resultObject = await buildResult(result, raceid, personid);
+        try {
+            resultObject = await buildResult(result, raceid, personid);
+        } catch(err) {
+            console.log(err);
+        }
     }
 }
 
