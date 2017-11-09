@@ -1,7 +1,7 @@
 var normalize_race = function (req_query) {
     var params = {};
     if (req_query.raceid) {
-        params.id = req_query.raceid;
+        params.id = req_query.raceid.split(',');
     }
     if (req_query.class) {
         params.class = req_query.class;
@@ -21,10 +21,10 @@ var normalize_result = function (req_query) {
         params.id = req_query.resultid;
     }
     if (req_query.raceid) {
-        params.raceid = req_query.raceid;
+        params.raceid = req_query.raceid.split(',');
     }
     if (req_query.personid) {
-        params.personid = req_query.personid;
+        params.personid = req_query.personid.split(',');
     }
     return params;
 }

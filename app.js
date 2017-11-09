@@ -34,7 +34,6 @@ router.get('/', function(req, res) {
     res.json({message: 'hoorway! welcome to our api!'});
 });
 
-
 // Race data endpoint
 router.get('/races', function(req, res) {
     db.race.findAll(
