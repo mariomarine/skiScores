@@ -12,8 +12,8 @@ const sequelize = new Sequelize('skiscores', 'root', '', {
         min: 0,
         idle: 10000
     },
-    // storage: '../skiscores'
-    storage: './testscores'
+    storage: '../skiscores'
+    // storage: './testscores'
 });
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
