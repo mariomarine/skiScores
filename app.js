@@ -24,9 +24,9 @@ db.person = require('./models/person')(sequelize, Sequelize);
 
 // Create relations
 db.results.belongsTo(db.race, {foreignKey: 'raceid'});
-db.race.hasMany(db.results, {foreignKey: 'raceid'});
+db.race.hasMany(db.results, {foreignKey: 'id'});
 db.results.belongsTo(db.person, {foreignKey: 'personid'});
-db.person.hasMany(db.results, {foreignKey: 'personid'});
+db.person.hasMany(db.results, {foreignKey: 'id'});
 
 db.race.sync({force: false});
 db.results.sync({force: false});
@@ -42,25 +42,6 @@ sequelize.authenticate().then(() => {
 // Root endpoint
 router.get('/', function(req, res) {
     res.json({message: 'hoorway! welcome to our api!'});
-});
-
-// test Race data endpoint
-router.get('/test', function(req, res) {
-    db.results.findAll(
-        {
-          where: normalizer.normalize_result(req.query),
-          attributes: ['id', 'time', 'races.location'],
-          includes: [
-            {
-                model: db.race,
-                attributes: ['id', 'location', 'races.location'],
-                required: true
-            }
-          ]
-        }
-    ).then(function(result) {
-        res.json(result);
-    });
 });
 
 // Race data endpoint
@@ -86,11 +67,33 @@ router.get('/results', function(req, res){
 });
 
 // Person data endpoint
-router.get(['/person/:id', '/person'], function(req, res){
+router.get('/person', function(req, res){
     console.log(req.params.id);
 	db.person.findAll(
         {
             where: Object.assign({}, normalizer.normalize_person(req.query), {id: req.params.id})
+        }
+    ).then(function(results) {
+        res.json(results);
+    });
+});
+
+// Analyze data by person endpoint
+router.get('/races/person/:person_id', function(req, res){
+    console.log(req.params.person_id);
+	db.results.findAll(
+        {
+            where: {personid: req.params.person_id.split(',')},
+            include: [
+                {
+                    model: db.race,
+                    required: true
+                },
+                {
+                    model: db.person,
+                    required: true
+                }
+            ]
         }
     ).then(function(results) {
         res.json(results);

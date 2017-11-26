@@ -24,7 +24,7 @@ var normalize_result = function (req_query) {
         params.raceid = req_query.raceid.split(',');
     }
     if (req_query.personid) {
-        params.personid = req_query.personid.split(',');
+        params.id = req_query.personid.split(',');
     }
     return params;
 }
@@ -32,7 +32,7 @@ var normalize_result = function (req_query) {
 var normalize_person = function (req_query) {
     var params = {};
     if (req_query.personid) {
-        params.id = req_query.personid;
+        params.id = req_query.personid.split(',');
     }
     return params;
 }
